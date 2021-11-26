@@ -1,0 +1,16 @@
+package com.git.feed;
+
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class Feed {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+}

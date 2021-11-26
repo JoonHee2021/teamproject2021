@@ -1,0 +1,61 @@
+package com.git.feed;
+
+import java.util.Optional;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort;
+
+@RestController
+public class FeedController {
+
+	private FeedRepository repo;
+	
+	@Autowired
+	public FeedController(FeedRepository repo) {
+		this.repo = repo;
+	}
+
+	@GetMapping(value = "/feed")
+	public List<Feed> getWikis() throws InterruptedException {
+		// repository.findAll();
+		// SELECT * FROM photo;
+		// 기본적으로 PK 순정렬(asc, ascending)되고 있는 상황
+		// 1 2 3 .....
+//		return repo.findAll();
+
+		// id컬럼 역정렬(clusted index)
+		// Sort.by("정렬컬럼").desceding() 역정렬
+		// Sort.by("정렬컬럼").ascending() 순정렬
+		return repo.findAll(Sort.by("id").descending());
+	}
+	@DeleteMapping(value = "/feed/{id}")
+	public boolean removeFeed(@PathVariable long id, HttpServletResponse res) throws InterruptedException {
+//		Thread.sleep(5000);
+
+		// id에 해당하는 객체가 없으면
+		// Optional null-safe, 자바 1.8 나온 방식
+		// repository.findBy(id)
+		// select * from photo where id = ?;
+		Optional<Feed> feed = repo.findById(id);
+		if (feed.isEmpty()) {
+			res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return false;
+		}
+
+		// 삭제 수행
+		// repository.deletebyId(id)
+		// delete from photo where id = ?
+		repo.deleteById(id);
+
+		return true;
+	}
+	
+	@RabbitListener
+}

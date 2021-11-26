@@ -1,0 +1,7 @@
+server:
+  port: 8080
+  
+spring:  rabbitmq:
+    addresses: amqps://b-e96b7c3f-e781-4300-8c17-8bfe7a5ecf65.mq.ap-northeast-2.amazonaws.com 
+    username: rabbitmq
+    password: password123!

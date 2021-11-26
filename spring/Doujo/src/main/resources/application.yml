@@ -1,0 +1,4 @@
+spring:  rabbitmq:
+    addresses: amqps://b-e96b7c3f-e781-4300-8c17-8bfe7a5ecf65.mq.ap-northeast-2.amazonaws.com
+    username: rabbitmq
+    password: password123!  application:    name: wiki&feed  datasource:    driver-class-name: org.postgresql.Driver    url: jdbc:postgresql://database-1.cw1oenxtbpdm.ap-northeast-2.rds.amazonaws.com/postgres?currentSchema=DouJo    username: postgres    password: password123!  jpa:    show-sql: true    generate-ddl: true # SQL 명령어를 자동으로 수행함
